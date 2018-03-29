@@ -1,5 +1,0 @@
-class Parser {
-    
-    public Parser() {}
-    
-}

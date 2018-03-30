@@ -1,3 +1,5 @@
+# Defined grammar
+
 <program> ::= <statements_list> | E
 <statements_list> ::= <methods_list> | <statement><statements_list>
 <methods_list> ::= <method> <methods_list>
@@ -12,5 +14,27 @@
 <statement> ::= <type> <name> = <statement>;
 <statement> ::= <type> <name> = <called_method>;
 <statement> ::= <type> <name> = <defined_method>
+<type> ::= int | float | double | long | boolean | string | char | byte
+<name> ::= /[a-zA-Z_$][^$][a-zA-Z0-9_]*/
+
+# LL(1) grammar
+
+<program> ::= <statements_list> | E
+<statements_list> ::= <statement> <statements_list_prime> | <method_list>
+<statements_list_prime> ::= <statements_list> | E
+<methods_list> ::= <method> <methods_list_prime> | <method> | E
+<methods_list_prime> ::= <methods_list> | E
+<method> ::= <called_method> | <defined_method> | <abstract_method>
+<defined_method> ::= <method_type> <name> ( <params> ){ <body> } | <method_type> <name> ( <params> ) <body> end
+<abstract_method> ::= <method_type> <name> ( <params> );
+<called_method> ::= <method_type> <name> ( <name> );
+<params> ::= <type> <name>, <params_prime>
+<params> ::= <type> <name>
+<params_prime> ::= <params> | E
+<method_type> ::= <type> | def | void
+<statement> ::= <type> <name> = <statement_prime>;
+<statement> ::= <type> <name> = <called_method>;
+<statement> ::= <type> <name> = <defined_method>
+<statement_prime> ::= <statement> | E
 <type> ::= int | float | double | long | boolean | string | char | byte
 <name> ::= /[a-zA-Z_$][^$][a-zA-Z0-9_]*/
